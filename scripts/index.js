@@ -6,11 +6,11 @@ const removeCardItem = (cardItem) => {
   cardItem.remove();
 };
 
-const addCardItem = ({ name, link, alt }, deleteHandler) => {
+const addCardItem = ({ name, link }, deleteHandler) => {
   const cardItem = cardTemplate.querySelector(".places__item").cloneNode(true);
   const cardImage = cardItem.querySelector(".card__image");
   cardImage.src = link;
-  cardImage.alt = alt;
+  cardImage.alt = name;
   cardItem.querySelector(".card__title").textContent = name;
   cardItem
     .querySelector(".card__delete-button")
