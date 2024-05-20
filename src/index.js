@@ -1,28 +1,30 @@
-import './index.css';
-import { initialCards } from './cards.js';
+import "./index.css";
+import { initialCards } from "./cards.js";
+import { addCardItem } from "./components/addCardItem.js";
+import {
+  openModal,
+  addCardModal,
+  cardModal,
+  editProfileHandler,
+} from "./components/modal.js";
 
-const cardTemplate = document.querySelector("#card-template").content;
-
-const cardsContainer = document.querySelector(".places__list");
-
-const removeCardItem = (cardItem) => {
-  cardItem.remove();
-};
-
-const addCardItem = ({ name, link }, deleteHandler) => {
-  const cardItem = cardTemplate.querySelector(".places__item").cloneNode(true);
-  const cardImage = cardItem.querySelector(".card__image");
-  cardImage.src = link;
-  cardImage.alt = name;
-  cardItem.querySelector(".card__title").textContent = name;
-  cardItem
-    .querySelector(".card__delete-button")
-    .addEventListener("click", () => {
-      deleteHandler(cardItem);
-    });
-  return cardItem;
-};
+const page = document.querySelector(".page");
 
 initialCards.forEach((card) => {
-  cardsContainer.append(addCardItem(card, removeCardItem));
+  document.querySelector(".places__list").append(addCardItem(card));
+});
+
+page.addEventListener("click", (event) => {
+  if (event.target.classList.contains("profile__edit-button")) {
+    openModal(document.querySelector(".popup_type_edit"));
+    editProfileHandler();
+  }
+  if (event.target.classList.contains("profile__add-button")) {
+    openModal(document.querySelector(".popup_type_new-card"));
+    addCardModal();
+  }
+  if (event.target.classList.contains("card__image")) {
+    openModal(document.querySelector(".popup_type_image"));
+    cardModal(event.target.closest(".card"));
+  }
 });
