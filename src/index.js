@@ -51,8 +51,9 @@ initialCards.forEach((card) => {
 });
 
 closeButtons.forEach((button) => {
+  const popup = button.closest(".popup");
   button.addEventListener("click", () => {
-    closeModal(document.querySelector(".popup_is-opened"));
+    closeModal(popup);
   });
 });
 
