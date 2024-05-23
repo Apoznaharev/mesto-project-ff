@@ -14,6 +14,14 @@ const editProfileForm = document.forms.edit_profile;
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const cardsContainer = document.querySelector(".places__list");
+const imagePopupCaption = document.querySelector(".popup__caption");
+
+const cardModal = (name, link) => {
+  const popupImage = document.querySelector(".popup__image");
+  popupImage.src = link;
+  popupImage.alt = name;
+  imagePopupCaption.textContent = name;
+};
 
 addCardForm.addEventListener("submit", (event) => {
   const placeName = addCardForm.elements.place_name;
@@ -23,7 +31,8 @@ addCardForm.addEventListener("submit", (event) => {
     addCardItem(
       { name: placeName.value, link: placeLink.value },
       removeCardItem,
-      cardLike
+      cardLike,
+      cardModal
     )
   );
   addCardForm.reset();
@@ -38,7 +47,7 @@ editProfileForm.addEventListener("submit", (event) => {
 });
 
 initialCards.forEach((card) => {
-  cardsContainer.append(addCardItem(card, removeCardItem, cardLike));
+  cardsContainer.append(addCardItem(card, removeCardItem, cardLike, cardModal));
 });
 
 closeButtons.forEach((button) => {
