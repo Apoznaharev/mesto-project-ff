@@ -38,20 +38,34 @@ export const addCardItem = (
   return cardItem;
 };
 
-export const cardLike = (likeIcon, card, likeCounter) => {
+export const toggleLike = (likeIcon, card, likeCounter) => {
   if (likeIcon.classList.contains("card__like-button_is-active")) {
-    deleteLike(card._id).then((card) => {
-      likeCounter.textContent = card.likes.length;
-    });
+    deleteLike(card._id)
+      .then((card) => {
+        likeCounter.textContent = card.likes.length;
+        likeIcon.classList.toggle("card__like-button_is-active");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   } else {
-    putLike(card._id).then((card) => {
-      likeCounter.textContent = card.likes.length;
-    });
+    putLike(card._id)
+      .then((card) => {
+        likeCounter.textContent = card.likes.length;
+        likeIcon.classList.toggle("card__like-button_is-active");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-  likeIcon.classList.toggle("card__like-button_is-active");
 };
 
 export const removeCardItem = (cardItem, cardId) => {
-  deleteCard(cardId);
-  cardItem.remove();
+  deleteCard(cardId)
+    .then(() => {
+      cardItem.remove();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
